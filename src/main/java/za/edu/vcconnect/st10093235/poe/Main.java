@@ -1,11 +1,15 @@
 package za.edu.vcconnect.st10093235.poe;
 
+import javax.swing.*;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Main {
     // Initialise saved user
     public static Login savedLogin;
+    public static Set<Task> savedTasks = new HashSet<>();
 
     public static void main(String[] args) {
 
@@ -72,6 +76,91 @@ public class Main {
             System.out.println("Welcome " + savedLogin.getFirstname() + ", " + savedLogin.getLastname() + " It's great to see you again");
             savedLogin.setLoggedIn(true);
             savedLogin.returnLoginStatus();
+            System.out.println("Welcome to EasyKanban.");
+
+            while (true) {
+
+                System.out.println("1. Add Tasks\n2. Show Report\n3. Quit ");
+                switch (input.nextInt()) {
+                    //Add tasks
+                    case 1:
+
+
+                        System.out.println("How many tasks would you like to add?");
+                        int numberOfTasks = input.nextInt();
+
+                        while (numberOfTasks > 0) {
+                            Scanner sc = new Scanner(System.in);
+                            Task newTask = new Task();
+
+                            System.out.println("Please enter the Task name.");
+                            newTask.setTaskName(sc.nextLine());
+
+                            System.out.println("Please enter the task description");
+                            newTask.setTaskDescription(sc.nextLine());
+
+                            System.out.println("Please enter developer details.");
+                            newTask.setDeveloperDetails(sc.nextLine());
+
+                            System.out.println("Please enter task duration. (hours)");
+                            newTask.setTaskDuration(sc.nextFloat());
+
+
+                            System.out.println("Please select a task status\n1. To Do\n2. Done\n3. Doing");
+                            switch (sc.nextInt()) {
+
+
+                                case 1:
+
+                                    newTask.setTaskStatus(TaskStatus.TODO);
+
+                                    break;
+
+
+                                case 2:
+
+                                    newTask.setTaskStatus(TaskStatus.DONE);
+
+                                    break;
+
+                                case 3:
+
+                                    newTask.setTaskStatus(TaskStatus.DOING);
+
+                                    break;
+
+                                default:
+
+                            }
+
+                            newTask.setTaskNumber(savedTasks.size());
+
+                            char[] taskChars = newTask.getTaskName().toUpperCase().toCharArray();
+                            char[] developerChars = newTask.getDeveloperDetails().toUpperCase().toCharArray();
+                            newTask.setTaskId(taskChars[0] + taskChars[1] + ":" + newTask.getTaskNumber() + ":" + developerChars[developerChars.length - 3] + developerChars[developerChars.length - 2] + developerChars[developerChars.length-1]);
+
+                            savedTasks.add(newTask);
+                            System.out.println("Task successfully saved");
+                            JOptionPane.showConfirmDialog(null, "Task Status: " + newTask.getTaskStatus().toString() + "\nDeveloper Details: " + newTask.getDeveloperDetails() + "\nTask Number: " + newTask.getTaskNumber() + "\nTask Name: " + newTask.getTaskName() + "\nTask Description: " + newTask.getTaskDescription() + "\nTask ID: " + newTask.getTaskId() + "\nTask Duration: " + newTask.getTaskDuration(), "Task Details", JOptionPane.OK_OPTION);
+
+                            numberOfTasks--;
+                        }
+
+                        break;
+
+                    //Show report
+                    case 2:
+                        System.out.println("Coming soon.");
+
+                        break;
+                    //Quit
+                    case 3:
+                        System.exit(0);
+                        break;
+                    default:
+                }
+            }
+
 
         } else {
             System.out.println("Username or password is incorrect. Please try again.");
