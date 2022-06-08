@@ -6,10 +6,15 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import za.edu.vcconnect.st10093235.poe.Task;
+
+import static za.edu.vcconnect.st10093235.poe.Task.checkTaskDescription;
+import static za.edu.vcconnect.st10093235.poe.Task.savedTasks;
+
 public class Main {
     // Initialise saved user
     public static Login savedLogin;
-    public static Set<Task> savedTasks = new HashSet<>();
+
 
     public static void main(String[] args) {
 
@@ -97,7 +102,15 @@ public class Main {
                             newTask.setTaskName(sc.nextLine());
 
                             System.out.println("Please enter the task description");
-                            newTask.setTaskDescription(sc.nextLine());
+
+                            String description = sc.nextLine();
+                            while(!checkTaskDescription(description)){
+                                System.out.println("Please enter a task description of less than 50 characters.");
+                                description = sc.nextLine();
+                            }
+
+
+                            newTask.setTaskDescription(description);
 
                             System.out.println("Please enter developer details.");
                             newTask.setDeveloperDetails(sc.nextLine());
@@ -192,4 +205,5 @@ public class Main {
             return false;
         }
     }
+
 }

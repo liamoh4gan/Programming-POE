@@ -1,6 +1,7 @@
 package za.edu.vcconnect.st10093235.poe;
 
-import java.util.StringTokenizer;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Task {
     String taskName;
@@ -10,6 +11,7 @@ public class Task {
     TaskStatus taskStatus;
     float taskDuration;
     String taskId;
+    public static Set<Task> savedTasks = new HashSet<>();
 
     public Task(){
 
@@ -97,5 +99,27 @@ public class Task {
     }
 
 
+    public static boolean checkTaskDescription(String description){
 
+        if (description.length() > 50) {
+            return false;
+        }else {
+            return true;
+        }
+
+    }
+    public String printTaskDetails(){
+
+        return "Task name: " + this.getTaskName() + "\ntaskNumber: " + this.getTaskNumber() + "\ntaskDescription: " + this.getTaskDescription() + "\ndeveloperDetails: " + this.getDeveloperDetails() + "\ntaskDuration: " + this.getTaskDuration() + "\ntaskID: " + this.getTaskId() + "\ntaskStatus: " + this.getTaskStatus().toString();
+
+    }
+    public float returnTotalHours(){
+        float totalHours = 0;
+
+        for (Task task : savedTasks){
+            totalHours = totalHours + task.getTaskDuration();
+
+        }
+        return totalHours;
+    }
 }
