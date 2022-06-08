@@ -150,11 +150,11 @@ public class Main {
 
                             char[] taskChars = newTask.getTaskName().toUpperCase().toCharArray();
                             char[] developerChars = newTask.getDeveloperDetails().toUpperCase().toCharArray();
-                            newTask.setTaskId(taskChars[0] + taskChars[1] + ":" + newTask.getTaskNumber() + ":" + developerChars[developerChars.length - 3] + developerChars[developerChars.length - 2] + developerChars[developerChars.length-1]);
+                            newTask.setTaskId(taskChars[0] +""+ taskChars[1] + ":" + newTask.getTaskNumber() + ":" + developerChars[developerChars.length - 3] + developerChars[developerChars.length - 2] + developerChars[developerChars.length-1]);
 
                             savedTasks.add(newTask);
                             System.out.println("Task successfully saved");
-                            JOptionPane.showConfirmDialog(null, "Task Status: " + newTask.getTaskStatus().toString() + "\nDeveloper Details: " + newTask.getDeveloperDetails() + "\nTask Number: " + newTask.getTaskNumber() + "\nTask Name: " + newTask.getTaskName() + "\nTask Description: " + newTask.getTaskDescription() + "\nTask ID: " + newTask.getTaskId() + "\nTask Duration: " + newTask.getTaskDuration(), "Task Details", JOptionPane.OK_OPTION);
+                            JOptionPane.showMessageDialog(null, "Task Status: " + newTask.getTaskStatus().toString() + "\nDeveloper Details: " + newTask.getDeveloperDetails() + "\nTask Number: " + newTask.getTaskNumber() + "\nTask Name: " + newTask.getTaskName() + "\nTask Description: " + newTask.getTaskDescription() + "\nTask ID: " + newTask.getTaskId() + "\nTask Duration: " + newTask.getTaskDuration(), "Task Details", JOptionPane.PLAIN_MESSAGE);
 
                             numberOfTasks--;
                         }

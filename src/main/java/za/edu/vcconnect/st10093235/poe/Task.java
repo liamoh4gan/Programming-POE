@@ -3,7 +3,9 @@ package za.edu.vcconnect.st10093235.poe;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public class Task {
+    //Declare variables
     String taskName;
     int taskNumber;
     String taskDescription;
@@ -16,7 +18,7 @@ public class Task {
     public Task(){
 
     }
-
+//init constructor
     public Task(String taskName, int taskNumber, String taskDescription, String developerDetails, float taskDuration, String taskId, TaskStatus taskStatus){
 
         this.taskName = taskName;
@@ -29,7 +31,7 @@ public class Task {
 
     }
 
-
+//setters and getters
     public String getTaskName() {
         return taskName;
     }
