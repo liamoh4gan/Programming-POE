@@ -13,10 +13,17 @@ import static za.edu.vcconnect.st10093235.poe.Task.savedTasks;
 
 public class Main {
     // Initialise saved user
+
+    static String[]  developers,taskNames, taskIDs;
+    static Float[] taskDurations;
+    static  TaskStatus[] taskStatuses;
+
+
     public static Login savedLogin;
 
 
     public static void main(String[] args) {
+
 
         // initialise variables
         String firstname;
@@ -49,6 +56,9 @@ public class Main {
         registerUser(login);
         // login user
         loginUser();
+
+
+
     }
 
     // Sets savedLogin to current user
@@ -84,22 +94,33 @@ public class Main {
             System.out.println("Welcome to EasyKanban.");
 
             while (true) {
-
                 System.out.println("1. Add Tasks\n2. Show Report\n3. Quit ");
                 switch (input.nextInt()) {
                     //Add tasks
                     case 1:
-
-
                         System.out.println("How many tasks would you like to add?");
                         int numberOfTasks = input.nextInt();
 
+                        //initilize arrays
+                        developers=new String[numberOfTasks];
+                        taskNames=new String[numberOfTasks];
+                        taskIDs=new String[numberOfTasks];
+                        taskDurations=new Float[numberOfTasks];
+                        taskStatuses=new TaskStatus[numberOfTasks];
+
+
+
+                        int counter=0;
                         while (numberOfTasks > 0) {
                             Scanner sc = new Scanner(System.in);
                             Task newTask = new Task();
 
                             System.out.println("Please enter the Task name.");
-                            newTask.setTaskName(sc.nextLine());
+                            String taskname=sc.nextLine();
+
+                            taskNames[counter]=taskname;
+
+                            newTask.setTaskName(taskname);
 
                             System.out.println("Please enter the task description");
 
@@ -113,11 +134,13 @@ public class Main {
                             newTask.setTaskDescription(description);
 
                             System.out.println("Please enter developer details.");
-                            newTask.setDeveloperDetails(sc.nextLine());
-
+                            String developer=sc.nextLine();
+                            newTask.setDeveloperDetails(developer);
+                            developers[counter]=developer;
                             System.out.println("Please enter task duration. (hours)");
-                            newTask.setTaskDuration(sc.nextFloat());
-
+                            float duration=sc.nextFloat();
+                            newTask.setTaskDuration(duration);
+                            taskDurations[counter]=duration;
 
                             System.out.println("Please select a task status\n1. To Do\n2. Done\n3. Doing");
                             switch (sc.nextInt()) {
@@ -126,20 +149,18 @@ public class Main {
                                 case 1:
 
                                     newTask.setTaskStatus(TaskStatus.TODO);
-
+                                    taskStatuses[counter]=TaskStatus.TODO;
                                     break;
 
 
                                 case 2:
-
                                     newTask.setTaskStatus(TaskStatus.DONE);
-
+                                    taskStatuses[counter]=TaskStatus.DONE;
                                     break;
 
                                 case 3:
-
                                     newTask.setTaskStatus(TaskStatus.DOING);
-
+                                    taskStatuses[counter]=TaskStatus.DOING;
                                     break;
 
                                 default:
@@ -150,21 +171,29 @@ public class Main {
 
                             char[] taskChars = newTask.getTaskName().toUpperCase().toCharArray();
                             char[] developerChars = newTask.getDeveloperDetails().toUpperCase().toCharArray();
-                            newTask.setTaskId(taskChars[0] +""+ taskChars[1] + ":" + newTask.getTaskNumber() + ":" + developerChars[developerChars.length - 3] + developerChars[developerChars.length - 2] + developerChars[developerChars.length-1]);
+                            String taskID=taskChars[0] +""+ taskChars[1] + ":" + newTask.getTaskNumber() + ":" + developerChars[developerChars.length - 3] + developerChars[developerChars.length - 2] + developerChars[developerChars.length-1];
+                            taskIDs[counter]=taskID;
+                            newTask.setTaskId(taskID);
 
                             savedTasks.add(newTask);
+                            counter++;
+                            numberOfTasks--;
                             System.out.println("Task successfully saved");
                             JOptionPane.showMessageDialog(null, "Task Status: " + newTask.getTaskStatus().toString() + "\nDeveloper Details: " + newTask.getDeveloperDetails() + "\nTask Number: " + newTask.getTaskNumber() + "\nTask Name: " + newTask.getTaskName() + "\nTask Description: " + newTask.getTaskDescription() + "\nTask ID: " + newTask.getTaskId() + "\nTask Duration: " + newTask.getTaskDuration(), "Task Details", JOptionPane.PLAIN_MESSAGE);
 
-                            numberOfTasks--;
+
                         }
 
                         break;
 
                     //Show report
                     case 2:
-                        System.out.println("Coming soon.");
-
+                        if(developers==null)
+                            System.out.println("Please add tasks first");
+                        else {
+                            Report report = new Report(developers, taskNames, taskIDs, taskDurations, taskStatuses);
+                            report.menu();
+                        }
                         break;
                     //Quit
                     case 3:
@@ -179,6 +208,7 @@ public class Main {
             System.out.println("Username or password is incorrect. Please try again.");
             loginUser();
         }
+
 
     }
 

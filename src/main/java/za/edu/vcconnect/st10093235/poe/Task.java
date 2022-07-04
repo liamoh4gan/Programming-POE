@@ -14,12 +14,18 @@ public class Task {
     float taskDuration;
     String taskId;
     public static Set<Task> savedTasks = new HashSet<>();
+    //Task 3
+
 
     public Task(){
 
     }
 //init constructor
     public Task(String taskName, int taskNumber, String taskDescription, String developerDetails, float taskDuration, String taskId, TaskStatus taskStatus){
+
+
+
+
 
         this.taskName = taskName;
         this.taskNumber = taskNumber;
